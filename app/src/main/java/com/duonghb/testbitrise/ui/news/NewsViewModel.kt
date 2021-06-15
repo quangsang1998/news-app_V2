@@ -36,13 +36,12 @@ class NewsViewModel @Inject constructor(
         getNewsListUseCase.invoke(Constant.API_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
+            .doFinally { _swipeRefreshing.postValue(false) }
             .subscribeBy(
                 onSuccess = {
                     _loadNewsCompleted.postValue(it)
-                    _swipeRefreshing.postValue(false)
                 },
                 onError = {
-                    _swipeRefreshing.postValue(false)
                     Timber.e("Error")
                 }
             )
