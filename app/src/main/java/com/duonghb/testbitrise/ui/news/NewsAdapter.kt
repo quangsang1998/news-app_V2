@@ -45,7 +45,7 @@ class NewsAdapter(
         var binding: ItemNewsBinding = itemView
 
         fun bind(news: NewsModelData) {
-            binding.model = news
+            // binding.model = news
 
             binding.root.setOnClickListener {
                 clickItemCallback.invoke(news)

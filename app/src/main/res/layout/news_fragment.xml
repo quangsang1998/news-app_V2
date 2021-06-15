@@ -5,7 +5,7 @@
 
   <data>
     <variable
-      name="newsViewModel"
+      name="viewModel"
       type="com.duonghb.testbitrise.ui.news.NewsViewModel" />
 
     <variable
@@ -17,8 +17,8 @@
     android:id="@+id/newsSwipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:refreshing="@{newsViewModel.swipeRefreshing}"
-    app:onRefreshListener="@{() -> newsViewModel.swipeRefreshingData()}">
+    app:refreshing="@{viewModel.swipeRefreshing}"
+    app:onRefreshListener="@{() -> viewModel.swipeRefreshingData()}">
 
     <RelativeLayout
       android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
       <FrameLayout
         android:id="@+id/progressLoading"
         android:animateLayoutChanges="true"
-        android:visibility="@{newsViewModel.loadNewsCompletedProgressBar? view.GONE: view.VISIBLE}"
+        android:visibility="@{viewModel.loading}"
         android:clickable="true"
         android:focusable="true"
         android:alpha="0.4"
