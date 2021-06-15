@@ -29,6 +29,9 @@ class NewsViewModel @Inject constructor(
     val loadNewsCompleted: LiveData<NewsModel> get() = _loadNewsCompleted
     private val _loadNewsCompleted = MutableLiveData<NewsModel>()
 
+    val loadNewsCompletedProgressBar: LiveData<Boolean> get() = _loadNewsCompletedProgressBar
+    private val _loadNewsCompletedProgressBar = MutableLiveData<Boolean>()
+
     val swipeRefreshing: LiveData<Boolean> get() = _swipeRefreshing
     private val _swipeRefreshing = MutableLiveData<Boolean>()
 
@@ -36,12 +39,14 @@ class NewsViewModel @Inject constructor(
         getNewsListUseCase.invoke(Constant.API_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .doFinally { _swipeRefreshing.postValue(false) }
             .subscribeBy(
                 onSuccess = {
                     _loadNewsCompleted.postValue(it)
+                    _loadNewsCompletedProgressBar.postValue(true)
+                    _swipeRefreshing.postValue(false)
                 },
                 onError = {
+                    _swipeRefreshing.postValue(false)
                     Timber.e("Error")
                 }
             )

@@ -13,22 +13,26 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HistoryFragment : Fragment(R.layout.history_fragment) {
 
-    private val viewModel: HistoryViewModel by viewModels()
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val binding = HistoryFragmentBinding.bind(view)
+
         binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = HistoryAdapter {
             findNavController().navigate(
-                HomeFragmentDirections.actionNavigationHomeToNavigationNewsDetail(it.url)
+                HomeFragmentDirections.actionNavigationHomeToNavigationNewsDetail(
+                    it.url
+                )
             )
         }
-        binding.historyRecyclerView.adapter = adapter
 
-        viewModel.getNewsHistoryListDatabase()
-        viewModel.loadNewsHistoryListDatabaseCompleted.observe(viewLifecycleOwner) {
+        binding.historyRecyclerView.adapter = adapter
+        historyViewModel.getNewsHistoryListDatabase()
+        historyViewModel.loadNewsHistoryListDatabaseCompleted.observe(viewLifecycleOwner) {
             adapter.setHistoryItems(it)
         }
     }
