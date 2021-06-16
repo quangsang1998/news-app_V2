@@ -43,7 +43,7 @@ class HistoryAdapter(
         var binding: ItemHistoryBinding = itemView
 
         fun bind(news: HistoryModelData) {
-            binding.modelHistory = news
+           // binding.modelHistory = news
 
             binding.root.setOnClickListener {
                 clickHistoryItemCallback.invoke(news)
